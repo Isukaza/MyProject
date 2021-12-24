@@ -18,6 +18,7 @@ namespace WpfApp
                 {
                     Selectcompany = new() { Name = Ncompany };
                 }
+
                 Staff Newstaff = new() { Name = Nstaff, Company = Selectcompany };
                 StaffProfile Profile = new() { Login = Login, Password = Password, Staff = Newstaff };
 
