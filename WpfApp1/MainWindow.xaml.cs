@@ -3,40 +3,42 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-
+using System.Windows.Controls;
 
 namespace WpfApp
 {
     public partial class MainWindow : Window
     {
-        static DbContextOptions<ApplicationContext> options;
+        private static DbContextOptions<ApplicationContext> options;
         public MainWindow()
         {
             InitializeComponent();
-            options = ApplicationContext.Create_option();
-            Interface_elements.Create_table(DB_list);
+            options = ApplicationContext.CreateOption();
+            InterfaceElements.CreateTable(DbList);
         }
 
         //Методы реализации функционала интерфейса 
         //Вывести данные в бд
         private void Button_show_Click(object sender, RoutedEventArgs e)
         {
-            //Заполнение ListView
-            DB_list.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
+            DbList.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
         }
 
         //Удаление элемента 
         private void Button_delete_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(TextBox_Staff.Text)
-                && TextBox_Company.Text.Trim() is "Microsoft" or "Google"
-                && Check_Depts(TextBox_Depts.Text.Trim())
-                && !string.IsNullOrWhiteSpace(TextBox_Login.Text)
-                && !string.IsNullOrWhiteSpace(TextBox_Password.Text)
-                )
+            if (!string.IsNullOrWhiteSpace(TextBoxIdStaff.Text)
+                  && !string.IsNullOrWhiteSpace(TextBoxStaff.Text)
+                  && TextBoxCompany.Text.Trim() is "Microsoft" or "Google"
+                  && CheckDepts(TextBoxDepts.Text.Trim())
+                  && !string.IsNullOrWhiteSpace(TextBoxLogin.Text)
+                  && !string.IsNullOrWhiteSpace(TextBoxPassword.Text)
+                  )
             {
-                if (CRUD.Del(options, Convert.ToInt32(TextBox_Id_Staff.Text), TextBox_Staff.Text, Return_max_Depts(TextBox_Depts.Text.Trim()), TextBox_Login.Text))
-                    DB_list.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
+                if (CRUD.Del(options, Convert.ToInt32(TextBoxIdStaff.Text), TextBoxStaff.Text, ReturnMaxDepts(TextBoxDepts.Text.Trim()), TextBoxLogin.Text))
+                {
+                    DbList.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
+                }
             }
             else
             {
@@ -47,16 +49,16 @@ namespace WpfApp
         //Добавление записи в БД
         private void Button_add_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(TextBox_Staff.Text)
-                && TextBox_Company.Text.Trim() is "Microsoft" or "Google"
-                && Check_Depts(TextBox_Depts.Text.Trim())
-                && !string.IsNullOrWhiteSpace(TextBox_Login.Text)
-                && !string.IsNullOrWhiteSpace(TextBox_Password.Text)
-                )
+            if (!string.IsNullOrWhiteSpace(TextBoxStaff.Text)
+                 && TextBoxCompany.Text.Trim() is "Microsoft" or "Google"
+                 && CheckDepts(TextBoxDepts.Text.Trim())
+                 && !string.IsNullOrWhiteSpace(TextBoxLogin.Text)
+                 && !string.IsNullOrWhiteSpace(TextBoxPassword.Text)
+                 )
             {
-                if (CRUD.Add(options, TextBox_Staff.Text, TextBox_Company.Text, Return_max_Depts(TextBox_Depts.Text.Trim()), TextBox_Login.Text, TextBox_Password.Text))
+                if (CRUD.Add(options, TextBoxStaff.Text, TextBoxCompany.Text, ReturnMaxDepts(TextBoxDepts.Text.Trim()), TextBoxLogin.Text, TextBoxPassword.Text))
                 {
-                    DB_list.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
+                    DbList.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
                 }
             }
             else
@@ -68,16 +70,22 @@ namespace WpfApp
         //Применить изменения к строке после внесения изменений 
         private void Button_change_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(TextBox_Staff.Text)
-                && TextBox_Company.Text.Trim() is "Microsoft" or "Google"
-                && Check_Depts(TextBox_Depts.Text.Trim())
-                && !string.IsNullOrWhiteSpace(TextBox_Login.Text)
-                && !string.IsNullOrWhiteSpace(TextBox_Password.Text)
+            MessageBox.Show($"{!string.IsNullOrWhiteSpace(TextBoxStaff.Text)}" +
+                $"{TextBoxCompany.Text.Trim() is "Microsoft" or "Google"}" +
+                $"{CheckDepts(TextBoxDepts.Text.Trim())}" +
+                $"{!string.IsNullOrWhiteSpace(TextBoxLogin.Text)}" +
+                $"{!string.IsNullOrWhiteSpace(TextBoxPassword.Text)}");
+
+            if (!string.IsNullOrWhiteSpace(TextBoxStaff.Text)
+                && TextBoxCompany.Text.Trim() is "Microsoft" or "Google"
+                && CheckDepts(TextBoxDepts.Text.Trim())
+                && !string.IsNullOrWhiteSpace(TextBoxLogin.Text)
+                && !string.IsNullOrWhiteSpace(TextBoxPassword.Text)
                 )
             {
-                if (CRUD.Change(options, System.Convert.ToInt32(TextBox_Id_Staff.Text), TextBox_Staff.Text, Return_max_Depts(TextBox_Depts.Text.Trim()), TextBox_Login.Text, TextBox_Password.Text))
+                if (CRUD.Change(options, Convert.ToInt32(TextBoxIdStaff.Text), TextBoxStaff.Text, ReturnMaxDepts(TextBoxDepts.Text.Trim()), TextBoxLogin.Text, TextBoxPassword.Text))
                 {
-                    DB_list.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
+                    DbList.ItemsSource = CRUD.Showdb(new List<DBdate>(), options);
                 }
             }
             else
@@ -87,29 +95,29 @@ namespace WpfApp
         }
 
         //Вывод выбранной строки в TextBox из LixtView для редактирования 
-        private void DB_list_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DbList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (DB_list.SelectedItem != null)
+            if (DbList.SelectedItem != null)
             {
-                string[] mystring = DB_list.SelectedItem.ToString().Split('\\');
+                string[] MyString = DbList.SelectedItem.ToString().Split('\\');
 
-                TextBox_Id_Staff.Text = mystring[0];
+                TextBoxIdStaff.Text = MyString[0];
 
-                TextBox_Staff.Text = mystring[1];
+                TextBoxStaff.Text = MyString[1];
 
-                TextBox_Company.Text = mystring[2];
+                TextBoxCompany.Text = MyString[2];
 
-                TextBox_Depts.Text = mystring[3];
+                TextBoxDepts.Text = MyString[3];
 
-                TextBox_Login.Text = mystring[4];
+                TextBoxLogin.Text = MyString[4];
 
-                TextBox_Password.Text = mystring[5];
+                TextBoxPassword.Text = MyString[5];
             }
         }
 
         //Технические методы
         //Проверка правильности ввода отделов
-        private static bool Check_Depts(string str)
+        private static bool CheckDepts(string str)
         {
             foreach (string s in str.Split(' ').Distinct())
             {
@@ -122,25 +130,25 @@ namespace WpfApp
         }
 
         //Удаление дубликатов отделов
-        private static List<string> Return_max_Depts(string str)
+        private static List<string> ReturnMaxDepts(string str)
         {
-            List<string> new_string = new(str.Split(' '));
-            new_string = new_string.Distinct().ToList();
-            return new_string;
+            List<string> NewString = new(str.Split(' '));
+            NewString = NewString.Distinct().ToList();
+            return NewString;
         }
     }
 
     public class DBdate
     {
-        public int Id_User { get; set; }
-        public string Name_Staff { get; set; }
-        public string Company_Name { get; set; }
+        public int IdUser { get; set; }
+        public string NameStaff { get; set; }
+        public string CompanyName { get; set; }
         public string Departament { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public override string ToString()
         {
-            return $"{Id_User}\\{Name_Staff}\\{Company_Name}\\{Departament}\\{Login}\\{Password}";
+            return $"{IdUser}\\{NameStaff}\\{CompanyName}\\{Departament}\\{Login}\\{Password}";
         }
     }
 }

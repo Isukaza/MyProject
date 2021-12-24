@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="WpfApp" Height="456" Width="800">
     <Grid>
-        <ListView x:Name="DB_list" Margin="0,0,0,123" Background="Lavender" MouseDoubleClick="DB_list_MouseDoubleClick"/>
+        <ListView x:Name="DbList" Margin="0,0,0,123" Background="Lavender" MouseDoubleClick="DbList_MouseDoubleClick"/>
 
         <Button x:Name="button_add" Click="Button_add_Click" Content="Добавить" Width="60" Height="42" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,76"/>
         <Button x:Name="button_select" Click="Button_show_Click" Content="Вывести" Width="60" Height="42" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="75,0,0,76"/>
@@ -22,12 +22,12 @@
         <Label Content="Login" Margin="311,0,0,45" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <Label Content="Password" Margin="391,0,0,46" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
 
-        <TextBox x:Name="TextBox_Id_Staff" Margin="10,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="46"/>
-        <TextBox x:Name="TextBox_Staff" Margin="61,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="58"/>
-        <TextBox x:Name="TextBox_Company" Margin="124,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="56"/>
-        <TextBox x:Name="TextBox_Depts" Text="prog design" Margin="185,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
-        <TextBox x:Name="TextBox_Login" Margin="310,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="76"/>
-        <TextBox x:Name="TextBox_Password" Margin="391,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
+        <TextBox x:Name="TextBoxIdStaff" Margin="10,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="46"/>
+        <TextBox x:Name="TextBoxStaff" Margin="61,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="58"/>
+        <TextBox x:Name="TextBoxCompany" Margin="124,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="56"/>
+        <TextBox x:Name="TextBoxDepts" Text="prog design" Margin="185,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
+        <TextBox x:Name="TextBoxLogin" Margin="310,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="76"/>
+        <TextBox x:Name="TextBoxPassword" Margin="391,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
 
     </Grid>
 

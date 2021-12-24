@@ -8,31 +8,31 @@ namespace WpfApp
     public class CRUD
     {
         //Добавление данных в БД 
-        public static bool Add(DbContextOptions<ApplicationContext> options, string Nstaff, string Ncompany, List<string> Ndepts, string Login, string Password)
+        public static bool Add(DbContextOptions<ApplicationContext> options, string NStaff, string NCompany, List<string> NDepts, string Login, string Password)
         {
             using ApplicationContext db = new(options);
             if (db.Staffs.Include(p => p.Profile).FirstOrDefault(l => l.Profile.Login == Login) == null)
             {
-                Company Selectcompany = db.Companies.FirstOrDefault(c => c.Name == Ncompany);
-                if (Selectcompany == null)
+                Company SelectCompany = db.Companies.FirstOrDefault(c => c.Name == NCompany);
+                if (SelectCompany == null)
                 {
-                    Selectcompany = new() { Name = Ncompany };
+                    SelectCompany = new() { Name = NCompany };
                 }
 
-                Staff Newstaff = new() { Name = Nstaff, Company = Selectcompany };
-                StaffProfile Profile = new() { Login = Login, Password = Password, Staff = Newstaff };
+                Staff NewStaff = new() { Name = NStaff, Company = SelectCompany };
+                StaffProfile Profile = new() { Login = Login, Password = Password, Staff = NewStaff };
 
-                foreach (string line in Ndepts)
+                foreach (string line in NDepts)
                 {
                     Dept Add_dept = db.Depts.FirstOrDefault(d => d.Department == line);
                     if (Add_dept != null)
                     {
-                        Newstaff.Depts.Add(Add_dept);
+                        NewStaff.Depts.Add(Add_dept);
                     }
                 }
 
                 db.StaffProfiles.Add(Profile);
-                db.Staffs.Add(Newstaff);
+                db.Staffs.Add(NewStaff);
                 db.SaveChanges();
                 return true;
             }
@@ -58,9 +58,9 @@ namespace WpfApp
 
                 item.Add(new DBdate
                 {
-                    Id_User = Staff.Id,
-                    Name_Staff = Staff.Name,
-                    Company_Name = Staff.Company.Name,
+                    IdUser = Staff.Id,
+                    NameStaff = Staff.Name,
+                    CompanyName = Staff.Company.Name,
                     Departament = buff,
                     Login = Staff.Profile.Login,
                     Password = Staff.Profile.Password
@@ -71,24 +71,24 @@ namespace WpfApp
         }
 
         //Изменение данных в БД 
-        public static bool Change(DbContextOptions<ApplicationContext> options, int Idstaff, string Nstaff, List<string> Ndepts, string Login, string Password)
+        public static bool Change(DbContextOptions<ApplicationContext> options, int IdStaff, string NStaff, List<string> NDepts, string Login, string Password)
         {
             using ApplicationContext db = new(options);
-            Staff Renew_staff = db.Staffs.Include(c => c.Depts).Include(p => p.Profile).FirstOrDefault(s => s.Id == Idstaff);
+            Staff RenewStaff = db.Staffs.Include(c => c.Depts).Include(p => p.Profile).FirstOrDefault(s => s.Id == IdStaff);
 
-            if (Renew_staff != null)
+            if (RenewStaff != null)
             {
-                Renew_staff.Name = Nstaff;
-                Renew_staff.Profile.Login = Login;
-                Renew_staff.Depts.Clear();
-                Renew_staff.Profile.Password = Password;
+                RenewStaff.Name = NStaff;
+                RenewStaff.Profile.Login = Login;
+                RenewStaff.Depts.Clear();
+                RenewStaff.Profile.Password = Password;
 
-                foreach (string line in Ndepts)
+                foreach (string line in NDepts)
                 {
-                    Dept Renew_dept = db.Depts.FirstOrDefault(d => d.Department == line);
-                    if (Renew_dept != null)
+                    Dept RenewDept = db.Depts.FirstOrDefault(d => d.Department == line);
+                    if (RenewDept != null)
                     {
-                        Renew_staff.Depts.Add(Renew_dept);
+                        RenewStaff.Depts.Add(RenewDept);
                     }
                 }
 
@@ -99,32 +99,32 @@ namespace WpfApp
         }
 
         //Удаление данных из БД
-        public static bool Del(DbContextOptions<ApplicationContext> options, int Idstaff, string Nstaff, List<string> Ndepts, string Login)
+        public static bool Del(DbContextOptions<ApplicationContext> options, int IdStaff, string NStaff, List<string> NDepts, string Login)
         {
             using ApplicationContext db = new(options);
-            StaffProfile Profile = db.StaffProfiles.Include(s => s.Staff).FirstOrDefault(s => s.Id == Idstaff);
-            if (Profile != null && Profile.Login == Login && Profile.Staff.Name == Nstaff)
+            StaffProfile Profile = db.StaffProfiles.Include(s => s.Staff).FirstOrDefault(s => s.Id == IdStaff);
+            if (Profile != null && Profile.Login == Login && Profile.Staff.Name == NStaff)
             {
-                Staff Delstaff = db.Staffs.FirstOrDefault(p => p.Id == Idstaff);
+                Staff DelStaff = db.Staffs.FirstOrDefault(p => p.Id == IdStaff);
                 if (Profile != null)
                 {
                     db.StaffProfiles.Remove(Profile);
                     db.SaveChanges();
                 }
 
-                foreach (string str in Ndepts)
+                foreach (string str in NDepts)
                 {
-                    Dept Del_dept = db.Depts.FirstOrDefault(c => c.Department == str);
-                    if (Del_dept != null && Delstaff != null)
+                    Dept DelDept = db.Depts.FirstOrDefault(c => c.Department == str);
+                    if (DelDept != null && DelStaff != null)
                     {
-                        Delstaff.Depts.Remove(Del_dept);
+                        DelStaff.Depts.Remove(DelDept);
                         db.SaveChanges();
                     }
                 }
 
-                if (Delstaff != null)
+                if (DelStaff != null)
                 {
-                    db.Staffs.Remove(Delstaff);
+                    db.Staffs.Remove(DelStaff);
                     db.SaveChanges();
                 }
                 return true;

@@ -59,7 +59,7 @@ namespace WpfApp
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Описание первичных ключей и связей таблиц
+            //Описание первичных ключей 
             modelBuilder.Entity<Company>()
                 .HasKey(c => c.Id);
 
@@ -72,6 +72,7 @@ namespace WpfApp
             modelBuilder.Entity<Dept>()
                 .HasKey(c => c.Id);
 
+            //Описание связей таблиц
             modelBuilder.Entity<Staff>()
                 .HasOne(p => p.Company)
                 .WithMany(p => p.Staffs)
@@ -112,7 +113,7 @@ namespace WpfApp
                     new StaffProfile { Id = 4, Login="Gos", Password = "4g34g3g4", StaffId = 4 }
                });
         }
-        public static DbContextOptions<ApplicationContext> Create_option()
+        public static DbContextOptions<ApplicationContext> CreateOption()
         {
             ConfigurationBuilder builder = new();
             // установка пути к текущему каталогу

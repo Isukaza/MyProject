@@ -3,9 +3,9 @@ using System.Windows.Data;
 
 namespace WpfApp
 {
-    public class Interface_elements
+    public class InterfaceElements
     {
-        public static void Create_table(ListView DB_list)
+        public static void CreateTable(ListView DbList)
         {
             GridView myGridView = new();
             myGridView.AllowsColumnReorder = true;
@@ -13,21 +13,21 @@ namespace WpfApp
             //Формирование столбцов таблицы ListView
             myGridView.Columns.Add(new()
             {
-                DisplayMemberBinding = new Binding("Id_User"),
+                DisplayMemberBinding = new Binding("IdUser"),
                 Header = "User ID",
                 Width = 50
             });
 
             myGridView.Columns.Add(new()
             {
-                DisplayMemberBinding = new Binding("Name_Staff"),
+                DisplayMemberBinding = new Binding("NameStaff"),
                 Header = "Staff",
                 Width = 75
             });
 
             myGridView.Columns.Add(new()
             {
-                DisplayMemberBinding = new Binding("Company_Name"),
+                DisplayMemberBinding = new Binding("CompanyName"),
                 Header = "Company",
                 Width = 75
             });
@@ -50,8 +50,8 @@ namespace WpfApp
                 Width = 150
             });
 
-            //Вывод сформированно таблицы в ListView
-            DB_list.View = myGridView;
+            //Отрисовка столбцов ListView
+            DbList.View = myGridView;
         }
     }
 }
