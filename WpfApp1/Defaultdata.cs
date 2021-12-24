@@ -29,7 +29,6 @@ namespace WpfApp
             tom.Depts.Add(prog);
             tom.Depts.Add(desig);
             bob.Depts.Add(desig);
-
             alice.Depts.Add(desig);
             alice.Depts.Add(prog);
 
