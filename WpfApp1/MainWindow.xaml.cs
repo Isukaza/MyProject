@@ -9,7 +9,7 @@ namespace WpfApp
 {
     public partial class MainWindow : Window
     {
-        static DbContextOptions<WpfApp.ApplicationContext> options;
+        static DbContextOptions<ApplicationContext> options;
         public MainWindow()
         {
             InitializeComponent();

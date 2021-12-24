@@ -25,7 +25,7 @@
         <TextBox x:Name="TextBox_Id_Staff" Margin="10,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="46"/>
         <TextBox x:Name="TextBox_Staff" Margin="61,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="58"/>
         <TextBox x:Name="TextBox_Company" Margin="124,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="56"/>
-        <TextBox x:Name="TextBox_Depts" Margin="185,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
+        <TextBox x:Name="TextBox_Depts" Text="prog design" Margin="185,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
         <TextBox x:Name="TextBox_Login" Margin="310,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="76"/>
         <TextBox x:Name="TextBox_Password" Margin="391,0,0,29" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120"/>
 

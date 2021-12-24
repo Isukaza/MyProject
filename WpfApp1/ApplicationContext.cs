@@ -55,15 +55,62 @@ namespace WpfApp
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
                     : base(options)
         {
-            if (Database.EnsureCreated())
-            {
-                Defaultdata.Defaultset(options);
-            }
+            Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Описание первичных ключей и связей таблиц
             modelBuilder.Entity<Company>()
-                        .HasKey(c => c.Id);
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Staff>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<StaffProfile>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Dept>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Staff>()
+                .HasOne(p => p.Company)
+                .WithMany(p => p.Staffs)
+                .HasForeignKey(p => p.CompanyId);
+
+            modelBuilder.Entity<Staff>()
+                .HasOne(p => p.Profile)
+                .WithOne(p => p.Staff)
+                .HasForeignKey<StaffProfile>(p => p.StaffId);
+
+            //Данные для базовго заполнения БД
+            modelBuilder.Entity<Company>().HasData(
+                new Company[]{
+                    new Company{ Id = 1, Name = "Microsoft"},
+                    new Company{ Id = 2, Name = "Google" }
+                });
+
+            modelBuilder.Entity<Dept>().HasData(
+                new Dept[] { 
+                    new Dept { Id = 1, Department = "prog" },
+                    new Dept { Id = 2, Department = "design" } 
+                });
+
+
+            modelBuilder.Entity<Staff>().HasData(
+                new Staff[]{
+                    new Staff { Id = 1, Name="Tom", CompanyId =1 },
+                    new Staff { Id = 2, Name="Alice", CompanyId =2 },
+                    new Staff { Id = 3, Name="Sam", CompanyId =1 },
+                    new Staff { Id = 4, Name="Sam", CompanyId =2 }
+                });
+
+            modelBuilder.Entity<StaffProfile>().HasData(
+               new StaffProfile[]{
+                    new StaffProfile { Id = 1, Login="Tom", Password = "123dd3", StaffId = 1 },
+                    new StaffProfile { Id = 2, Login="Alice", Password = "3g223g32", StaffId = 2 },
+                    new StaffProfile { Id = 3, Login="Sam", Password = "g43g45g", StaffId = 3 },
+                    new StaffProfile { Id = 4, Login="Gos", Password = "4g34g3g4", StaffId = 4 }
+               });
         }
         public static DbContextOptions<ApplicationContext> Create_option()
         {
